@@ -273,25 +273,26 @@ SNAKE.Snake = SNAKE.Snake || (function() {
             newHead.yPos = oldHead.yPos + yPosShift[myDirection];
             
 	    var maxCols = playingBoard.grid[0].length-1;
-            var maxRows = playingBoard.grid.length-1; //stolen from the food placing code
+            var maxRows = playingBoard.grid.length-1; // Stolen from another pr
 
-           
-            if ( newHead.col === maxCols ){
+            // Checks if the snake is about to move into a wall, and if so, teleports it to the opposite one
+            if ( newHead.col === maxCols ) {
             	newHead.col = 1;
             	newHead.xPos = playingBoard.getBlockWidth();
-            } //checks if the snake is about to move into a wall, and if so, teleports it to the opposite one
-            if ( newHead.row === maxRows ){
+            } 
+            if ( newHead.row === maxRows ) {
             	newHead.row = 1;
             	newHead.yPos = playingBoard.getBlockHeight();
-            } //same thing four times because I barely know javascript
-            if ( newHead.row === 0 ){
-            	newHead.row = maxRows-1;
-            	newHead.yPos = (maxRows-1)*playingBoard.getBlockHeight();
+            } 
+		
+            if ( newHead.row === 0 ) {
+            	newHead.row = maxRows - 1;
+            	newHead.yPos = (maxRows - 1) * playingBoard.getBlockHeight();
             }
 
-            if ( newHead.col === 0 ){
-            	newHead.col = maxCols-1;
-            	newHead.xPos = (maxCols-1)*playingBoard.getBlockWidth(); 
+            if ( newHead.col === 0 ) {
+            	newHead.col = maxCols - 1;
+            	newHead.xPos = (maxCols - 1) * playingBoard.getBlockWidth(); 
             }
 		
             if ( !newHead.elmStyle ) {
@@ -307,7 +308,9 @@ SNAKE.Snake = SNAKE.Snake || (function() {
                 grid[newHead.row][newHead.col] = 1;
                 setTimeout(function(){me.go();}, snakeSpeed);
             } else if (grid[newHead.row][newHead.col] > 0) {
-                me.handleDeath();
+                //me.handleDeath(); // NEVER DIESSS
+		    grid[newHead.row][newHead.col] = 0
+		   setTimeout(function(){me.go();}, snakeSpeed);
             } else if (grid[newHead.row][newHead.col] === playingBoard.getGridFoodValue()) {
                 grid[newHead.row][newHead.col] = 1;
                 me.eatFood();
